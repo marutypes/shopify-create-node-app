@@ -25,13 +25,23 @@ const {argv} = yargs;
 
 const targetPath = argv['_'][0] || '.';
 
-console.log(`🚀 Creating a new ${chalk.magenta('Shopify')} embedded app in ${path}`);
+console.log(`🚀 Creating a new ${chalk.magenta('Shopify')} embedded app in ${targetPath}`);
 console.log(referToDocs);
 inquirer.prompt([
   {
     name: 'name',
     message: `What's your app's ${chalk.cyan('name')}?`,
     default: 'node-app',
+  },
+  {
+    name: 'host',
+    message: `What ${chalk.cyan('App URL')} do you want your app to use?`,
+    validate: required,
+  },
+  {
+    name: 'port',
+    message: `What ${chalk.cyan('port')} would you like to run on?`,
+    default: 3000,
   },
   {
     name: 'apiKey',
@@ -43,17 +53,12 @@ inquirer.prompt([
     message: `What's your app's ${chalk.cyan('secret')}? Don't worry we won't tell anyone.`,
     validate: required,
   },
-  {
-    name: 'host',
-    message: `What ${chalk.cyan('hostname')} do you want your app to use?`,
-    validate: required,
-  },
-  {
-    name: 'port',
-    message: `What ${chalk.cyan('port')} would you like to run on?`,
-    default: 3000,
-  },
 ]).then(async (answers) => {
+  const {host} = answers
+  if(host.slice(-1) === '/') {
+    answers.host = host.slice(0, -1);
+  }
+
   const templatesDirectory = path.join(__dirname, 'templates', 'express');
   const targetDirectory = path.join(process.cwd(), targetPath);
 
@@ -93,6 +98,7 @@ inquirer.prompt([
     });
 
     await exec('yarn install', { cwd: targetDirectory });
+    await exec(`open ${answers.host}/install`)
 
   } catch (err) {
     console.error(chalk.red(err))
