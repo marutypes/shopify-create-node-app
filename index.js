@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+const promisify = require('util').promisify;
+const path = require('path');
+const copy = promisify(require('copy-template-dir'));
 const yargs = require('yargs');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
@@ -15,7 +18,7 @@ yargs.usage('Usage: $0 [path]')
 
 const {argv} = yargs;
 
-const path = argv['_'][0] || '.';
+const targetPath = argv['_'][0] || '.';
 
 console.log(`🚀 Creating a new ${chalk.magenta('Shopify')} embedded app in ${path}`);
 console.log(referToDocs);
@@ -45,10 +48,17 @@ inquirer.prompt([
     message: `What ${chalk.cyan('port')} would you like to run on?`,
     default: 3000,
   },
-]).then((answers) => {
-  Object.entries(answers).map(([name, answer]) => {
-    console.log(name, ':', answer);
-  });
+]).then(async (answers) => {
+  const templatesDirectory = path.join(__dirname, 'templates', 'express');
+  const targetDirectory = path.join(process.cwd(), targetPath);
+
+  try {
+    const createdFiles = await copy(templatesDirectory, targetDirectory, answers);
+
+    createdFiles.forEach(filePath => console.log(chalk.green(`Created ${filePath}`)));
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 function required(input) {
