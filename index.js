@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-const promisify = require('util').promisify;
 const path = require('path');
-const copy = promisify(require('copy-template-dir'));
+const handlebars = require('handlebars')
+const {copy} = require('fs-extra');
+const {render} = require('handlebars-dir-render');
 const yargs = require('yargs');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
@@ -51,13 +52,43 @@ inquirer.prompt([
 ]).then(async (answers) => {
   const templatesDirectory = path.join(__dirname, 'templates', 'express');
   const targetDirectory = path.join(process.cwd(), targetPath);
-
   try {
-    const createdFiles = await copy(templatesDirectory, targetDirectory, answers);
+    const renderPromises = await render(templatesDirectory, targetDirectory, answers, ({path: filePath}) => {
+      const renderable = filePath.indexOf(`${templatesDirectory}/client`) == -1;
+      if (renderable) {
+        console.log(`Attempting to create file ${chalk.cyan(filePath.replace(templatesDirectory, targetDirectory))}`);
+        return true;
+      }
+    }, {handlebars});
 
-    createdFiles.forEach(filePath => console.log(chalk.green(`Created ${filePath}`)));
-  } catch (error) {
-    console.error(error);
+    const renderResults = await Promise.all(renderPromises);
+
+    renderResults.forEach((filePath) => {
+      console.log(`Succeeded creating file ${chalk.green(filePath)}`);
+    });
+
+    // copy client directory without templating
+    const successfulFiles = [];
+    await copy(
+      path.join(templatesDirectory, 'client'),
+      path.join(targetDirectory, 'client'),
+      {
+        filter(_, filePath) {
+          if (filePath) {
+            console.log(`Attempting to create file ${chalk.cyan(filePath)}`);
+            successfulFiles.push(filePath);
+          }
+          return true
+        }
+      }
+    );
+
+    successfulFiles.forEach((filePath) => {
+      console.log(`Succeeded creating file ${chalk.green(filePath)}`);
+    });
+
+  } catch (err) {
+    console.error(chalk.red('Error creating files', err))
   }
 });
 
