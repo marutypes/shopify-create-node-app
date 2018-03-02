@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+  </head>
+  <body>
+    <script src="https://cdn.shopify.com/s/assets/external/app.js"></script>
+
+    <script>
+      window.apiKey = "<%= apiKey %>"
+      window.shopOrigin = "https://<%= shop %>"
+
+      const shopifyAppConfig = {
+        apiKey: window.apiKey,
+        shopOrigin: window.shopOrigin,
+      }
+
+      // This will allow you to access the app outside of the Shopify
+      // parent iframe in development mode. Doing this will give you
+      // access to React and Redux dev tools, but will also disrupt
+      // postmessages to the parent and block EASDK calls
+      // https://help.shopify.com/api/sdks/shopify-apps/embedded-app-sdk/methods#shopifyapp-init-config
+      if ("<%= process.env.NODE_ENV %>" === 'development') {
+        shopifyAppConfig.forceRedirect = false;
+      }
+
+      ShopifyApp.init(shopifyAppConfig);
+    </script>
+
+    <div id="root"></div>
+    <script src="/assets/main.js"></script>
+  </body>
+</html>

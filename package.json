@@ -1,0 +1,13 @@
+{
+  "name": "create-node-app",
+  "version": "0.0.1",
+  "description": "Scaffold out your own embedded shopify app using node",
+  "main": "index.js",
+  "author": "themallen",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "inquirer": "^5.1.0"
+  }
+}
