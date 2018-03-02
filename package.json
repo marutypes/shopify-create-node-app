@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Scaffold out your own embedded shopify app using node",
   "main": "index.js",
+  "bin": "index.js",
   "author": "themallen",
   "license": "MIT",
   "private": false,
