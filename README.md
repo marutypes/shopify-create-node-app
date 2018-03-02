@@ -1,5 +1,5 @@
 # Create-Node-App
-Scaffold out a embedded node app in seconds!
+Scaffold out a embedded node app in seconds using [Polaris](https://github.com/Shopify/polaris) and [Shopify-Express](https://github.com/Shopify/shopify-express).
 
 ## Installation
 
