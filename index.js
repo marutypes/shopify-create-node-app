@@ -31,7 +31,7 @@ inquirer.prompt([
   {
     name: 'name',
     message: `What's your app's ${chalk.cyan('name')}?`,
-    default: 'node-app',
+    default: targetPath,
   },
   {
     name: 'host',
@@ -98,8 +98,7 @@ inquirer.prompt([
     });
 
     await exec('yarn install', { cwd: targetDirectory });
-    await exec(`open ${answers.host}/install`)
-
+    exec('yarn start', { cwd: targetDirectory });
   } catch (err) {
     console.error(chalk.red(err))
   }
