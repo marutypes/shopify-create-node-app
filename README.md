@@ -11,7 +11,7 @@ npm install -g @shopify/create-node-app
 **git**
 ```
 git clone git@github.com:TheMallen/shopify-create-node-app.git
-npm install -g path/to/clone
+npm install -g path/to/clone shopify-create-node-app
 ```
 
 
