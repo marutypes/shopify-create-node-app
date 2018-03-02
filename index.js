@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 const path = require('path');
+const promisify = require('util').promisify;
+
 const handlebars = require('handlebars')
 const {copy} = require('fs-extra');
 const {render} = require('handlebars-dir-render');
+
+const exec = promisify(require('exec-sh'));
 const yargs = require('yargs');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
@@ -52,6 +56,7 @@ inquirer.prompt([
 ]).then(async (answers) => {
   const templatesDirectory = path.join(__dirname, 'templates', 'express');
   const targetDirectory = path.join(process.cwd(), targetPath);
+
   try {
     const renderPromises = await render(templatesDirectory, targetDirectory, answers, ({path: filePath}) => {
       const renderable = filePath.indexOf(`${templatesDirectory}/client`) == -1;
@@ -87,8 +92,10 @@ inquirer.prompt([
       console.log(`Succeeded creating file ${chalk.green(filePath)}`);
     });
 
+    await exec('yarn install', { cwd: targetDirectory });
+
   } catch (err) {
-    console.error(chalk.red('Error creating files', err))
+    console.error(chalk.red(err))
   }
 });
 
