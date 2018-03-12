@@ -1,0 +1,8 @@
+node_modules/
+.vscode/
+config
+circle.yml
+tslint.json
+tsconfig.json
+yarn.lock
+.npmignore

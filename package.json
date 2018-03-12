@@ -1,0 +1,27 @@
+{
+  "name": "lerna-tests",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "publish": "lerna publish",
+    "test": "lerna run test",
+    "check": "lerna run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMallen/lerna-tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheMallen/lerna-tests/issues"
+  },
+  "homepage": "https://github.com/TheMallen/lerna-tests#readme",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "lerna": "^2.9.0"
+  }
+}

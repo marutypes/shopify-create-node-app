@@ -1,0 +1,5 @@
+node_modules
+animation
+/*.js
+/*.ts
+.DS_Store

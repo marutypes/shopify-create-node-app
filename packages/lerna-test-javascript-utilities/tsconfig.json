@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./",
+    "declaration": true,
+    "module": "commonjs",
+    "target": "es5",
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": false,
+    "noEmitOnError": true,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "./src/**/*",
+    "./config/typescript/**/*"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
+}

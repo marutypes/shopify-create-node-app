@@ -1,0 +1,7 @@
+.DS_Store
+lib
+*.log
+node_modules
+/*.js
+/*.ts
+/decorators/

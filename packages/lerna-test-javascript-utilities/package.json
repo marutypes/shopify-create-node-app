@@ -1,0 +1,37 @@
+{
+  "name": "@shopify/lerna-test-javascript-utilities",
+  "version": "2.2.0",
+  "description": "A set of utilities for JavaScript and TypeScript projects at Shopify.",
+  "homepage": "https://github.com/Shopify/javascript-utilities",
+  "repository": "https://github.com/Shopify/javascript-utilities",
+  "author": "Shopify <dev@shopify.com>",
+  "scripts": {
+    "clean": "rimraf '*.{js,d.ts}'",
+    "prebuild": "yarn run clean",
+    "build": "tsc",
+    "lint": "tslint -c ./config/tslint/full.json './src/**/*.ts' --project tsconfig.json",
+    "ts": "tsc --noEmit",
+    "test": "echo 'no tests yet!'",
+    "check": "npm-run-all lint ts",
+    "prepublish": "in-publish && yarn run build || :"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/javascript-utilities/issues"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash-decorators": "^4.0.0",
+    "in-publish": "^2.0.0",
+    "npm-run-all": "^4.0.2",
+    "rimraf": "^2.6.1",
+    "tslint": "^5.8.0",
+    "tslint-config-shopify": "^3.0.1",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.65",
+    "@types/react": "^16.0.2",
+    "lodash": "^4.17.4",
+    "lodash-decorators": "^4.3.5"
+  }
+}
