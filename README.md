@@ -4,9 +4,7 @@ Scaffold out a embedded node app in seconds using [Polaris](https://github.com/S
 ## Installation
 
 **npm**
-```
-npm install -g @shopify/create-node-app
-```
+Not currently on NPM :) Someday!
 
 **git**
 ```
